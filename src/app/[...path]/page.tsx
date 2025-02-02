@@ -11,8 +11,14 @@ function findFolder(path: string[], currentFolder: Folder): Folder | null {
   return findFolder(path.slice(1), nextFolder);
 }
 
-export default function FolderPage({ params }: { params: { path: string[] } }) {
-  const folder = findFolder(params.path, mockData);
+interface PageProps {
+  params: Promise<{ path: string[] }>;
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function FolderPage({ params, searchParams }: PageProps) {
+  const { path } = await params;
+  const folder = findFolder(path, mockData);
 
   if (!folder) {
     return <div className="text-white">Folder not found</div>;
@@ -20,12 +26,12 @@ export default function FolderPage({ params }: { params: { path: string[] } }) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header path={params.path} />
+      <Header path={path} />
       <main className="flex-grow p-4">
         <h1 className="mb-4 text-2xl font-bold text-white">{folder.name}</h1>
         <FolderView
           contents={folder.children}
-          currentPath={`/${params.path.join("/")}`}
+          currentPath={`/${path.join("/")}`}
         />
       </main>
     </div>

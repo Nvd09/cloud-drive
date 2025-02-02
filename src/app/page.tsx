@@ -1,14 +1,15 @@
-import Link from "next/link";
+import Header from "~/components/Header";
+import FolderView from "~/components/FolderView";
+import { mockData } from "~/lib/mockData";
 
-export default function HomePage() {
+export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div>Hello Welcome to our NodeJS application.</div>
-      </div>
-    </main>
+    <div className="flex min-h-screen flex-col">
+      <Header path={[]} />
+      <main className="flex-grow p-4">
+        <h1 className="mb-4 text-2xl font-bold text-white">My Drive</h1>
+        <FolderView contents={mockData.children} currentPath="" />
+      </main>
+    </div>
   );
 }

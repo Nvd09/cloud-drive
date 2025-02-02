@@ -12,12 +12,14 @@ function findFolder(path: string[], currentFolder: Folder): Folder | null {
 }
 
 interface PageProps {
-  params: Promise<{ path: string[] }>;
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ path: string[] }>
+  searchParams: Promise<Record<string, string | string[] | undefined>>
 }
 
 export default async function FolderPage({ params, searchParams }: PageProps) {
   const { path } = await params;
+  await searchParams; // We're not using searchParams, but we need to await it
+
   const folder = findFolder(path, mockData);
 
   if (!folder) {
